@@ -5,6 +5,7 @@ import com.jeonghyeon.authservice.dto.LoginDto;
 import com.jeonghyeon.authservice.dto.TokenDto;
 import com.jeonghyeon.authservice.security.jwt.JwtFilter;
 import com.jeonghyeon.authservice.security.jwt.TokenProvider;
+import com.jeonghyeon.authservice.security.util.SecurityUtil;
 import com.jeonghyeon.authservice.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -27,7 +28,7 @@ public class AccountController {
 
     @GetMapping("/health-check")
     public ResponseEntity health_check(){
-        System.out.println("OK");
+
         return new ResponseEntity("OK",HttpStatus.OK);
     }
 
@@ -46,7 +47,7 @@ public class AccountController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER,tokenDto.getToken());
         return new ResponseEntity(tokenDto,httpHeaders,HttpStatus.OK);
     }
-    @PostMapping("")
+    @PostMapping("/register")
     public ResponseEntity register(@RequestBody AccountRequestDto dto){
         System.out.println(dto);
         return accountService.createAccount(dto);
