@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable();
 
-        http.authorizeRequests().antMatchers("/actuator/**","register","/login","/find","/health-check").permitAll();
+        http.authorizeRequests().antMatchers("/actuator/**","/register","/login","/find","/health-check").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.apply(new JwtSecurityConfig(tokenProvider));
     }

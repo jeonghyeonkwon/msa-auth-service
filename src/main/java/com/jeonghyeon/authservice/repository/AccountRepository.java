@@ -14,4 +14,9 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
             " WHERE account.accountName = :accountName" +
             " AND account.accountTel = :accountTel")
     Optional<String> forgetId(String accountName, String accountTel);
+
+    @Query("SELECT account " +
+            "FROM Account account " +
+            "WHERE account.accountRandomId = :uuid")
+    Optional<Account> findByAccountRandomId(String uuid);
 }

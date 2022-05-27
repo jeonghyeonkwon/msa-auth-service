@@ -27,7 +27,7 @@ public class Account extends BaseTimeEntity{
 
     private String accountTel;
 
-    private Long price;
+    private Long money;
 
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole;
@@ -43,7 +43,7 @@ public class Account extends BaseTimeEntity{
         this.accountId = accountId;
         this.accountName = accountName;
         this.accountTel = accountTel;
-        this.price = (long) 0;
+        this.money = (long) 0;
         this.accountRole = AccountRole.NORMAL;
         this.address = address;
     }
