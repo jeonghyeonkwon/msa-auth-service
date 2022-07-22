@@ -10,16 +10,12 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name="accounts")
-@Data
 public class Account extends BaseTimeEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="account_pk")
-    private Long id;
+    private String uuid;
 
     private String accountId;
-
-    private String accountRandomId;
 
     private String accountPassword;
 
@@ -36,10 +32,9 @@ public class Account extends BaseTimeEntity{
     private Address address;
     protected Account(){}
 
-
-
-    public Account(String accountRandomId,String accountId,String accountName,String accountTel,Address address){
-        this.accountRandomId = accountRandomId;
+    // 회원 가입 생성자
+    public Account(String uuid,String accountId,String accountName,String accountTel,Address address){
+        this.uuid = uuid;
         this.accountId = accountId;
         this.accountName = accountName;
         this.accountTel = accountTel;
@@ -48,16 +43,14 @@ public class Account extends BaseTimeEntity{
         this.address = address;
     }
 
-    public Account(String accountRandomId,String adminId, String adminPw) {
-        this.accountRandomId= accountRandomId;
+    public Account(String uuid,String adminId, String adminPw) {
+        this.uuid = uuid;
         this.accountId = adminId;
         this.accountPassword = adminPw;
         this.accountRole = AccountRole.ADMIN;
     }
-
     public void setAccountPassword(String accountPassword) {
         this.accountPassword = accountPassword;
     }
-
 
 }

@@ -7,7 +7,7 @@ public class UserInfoDto {
 
     private String accountId;
 
-    private String accountRandomId;
+    private String uuid;
 
     private String accountName;
 
@@ -18,13 +18,13 @@ public class UserInfoDto {
     private String detail;
 
     public UserInfoDto (String accountId,
-                        String accountRandomId,
+                        String uuid,
                         String accountName,
                         String accountTel,
                         String zipCode,
                         String detail){
         this.accountId = accountId;
-        this.accountRandomId = accountRandomId;
+        this.uuid = uuid;
         this.accountName = accountName;
         this.accountTel = accountTel;
         this.zipCode = zipCode;

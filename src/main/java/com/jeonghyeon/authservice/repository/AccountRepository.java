@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface AccountRepository extends JpaRepository<Account,Long> {
+public interface AccountRepository extends JpaRepository<Account,String> {
     Optional<Account> findByAccountId(String accountId);
 
     @Query("SELECT account.accountId" +
@@ -15,8 +15,5 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
             " AND account.accountTel = :accountTel")
     Optional<String> forgetId(String accountName, String accountTel);
 
-    @Query("SELECT account " +
-            "FROM Account account " +
-            "WHERE account.accountRandomId = :uuid")
-    Optional<Account> findByAccountRandomId(String uuid);
+
 }

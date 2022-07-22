@@ -49,12 +49,12 @@ public class AccountService {
         account.setAccountPassword(encodePassword);
         Account saveAccount = accountRepository.save(account);
 
-        return saveAccount.getAccountRandomId();
+        return saveAccount.getUuid();
     }
 
 
     public ResponseEntity adminCheck(String uuid) {
-        Optional<Account> opAccount = accountRepository.findByAccountRandomId(uuid);
+        Optional<Account> opAccount = accountRepository.findById(uuid);
         if(opAccount.isEmpty()){
             throw new IllegalStateException("해당 유저아이디에 대한 정보가 없습니다.");
 

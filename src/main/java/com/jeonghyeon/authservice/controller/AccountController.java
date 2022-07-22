@@ -52,10 +52,13 @@ public class AccountController {
         return new ResponseEntity(new ResponseDto<>(HttpStatus.OK.value(), uuid),HttpStatus.OK);
     }
 
+    //아이디 중복 검사
     @GetMapping("/find")
     public ResponseEntity validateAccountId(@RequestParam("accountId")String accountId){
         return accountService.validateAccountId(accountId);
     }
+
+    //로그인
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginDto loginDto){
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDto.getUsername(),loginDto.getPassword());
@@ -67,9 +70,11 @@ public class AccountController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER,tokenDto.getToken());
         return new ResponseEntity(tokenDto,httpHeaders,HttpStatus.OK);
     }
+
+    //회원 가입
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody AccountRequestDto dto){
-        System.out.println(dto);
+
         String accountUUID = accountService.createAccount(dto);
         UserInfoDto userInfoDto = new UserInfoDto(dto.getAccountId(),
                 accountUUID,
@@ -77,10 +82,12 @@ public class AccountController {
                 dto.getAccountTel(),
                 dto.getZipCode(),
                 dto.getDetail());
+        // 회원 가입후 카프카로 user-service 유저 정보 데이터 전달
         UserInfoDto userInfo = kafkaProducer.userInfoSend(userInfoDto);
 
         return new ResponseEntity(new ResponseDto<>(HttpStatus.CREATED.value(),accountUUID),HttpStatus.CREATED);
     }
+    //
     @GetMapping("/authentication-check")
     public ResponseEntity authenticationCheck(){
         return new ResponseEntity(new ResponseDto<>(HttpStatus.OK.value(), "OK"),HttpStatus.OK);
