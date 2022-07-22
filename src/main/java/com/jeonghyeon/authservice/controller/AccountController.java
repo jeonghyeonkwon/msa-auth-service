@@ -87,7 +87,13 @@ public class AccountController {
 
         return new ResponseEntity(new ResponseDto<>(HttpStatus.CREATED.value(),accountUUID),HttpStatus.CREATED);
     }
-    //
+
+    @PostMapping("role-change")
+    public ResponseEntity roleChange(@RequestBody RoleChangeRequestDto dto){
+        return accountService.roleChange(dto);
+    }
+
+
     @GetMapping("/authentication-check")
     public ResponseEntity authenticationCheck(){
         return new ResponseEntity(new ResponseDto<>(HttpStatus.OK.value(), "OK"),HttpStatus.OK);

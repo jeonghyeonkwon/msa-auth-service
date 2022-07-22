@@ -53,4 +53,8 @@ public class Account extends BaseTimeEntity{
         this.accountPassword = accountPassword;
     }
 
+    public Account updateRole(String accountRole) {
+        this.accountRole = AccountRole.valueOf(accountRole);
+        return this;
+    }
 }

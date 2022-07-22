@@ -5,6 +5,7 @@ import com.jeonghyeon.authservice.domain.AccountRole;
 import com.jeonghyeon.authservice.domain.Address;
 import com.jeonghyeon.authservice.dto.AccountRequestDto;
 import com.jeonghyeon.authservice.dto.ResponseDto;
+import com.jeonghyeon.authservice.dto.RoleChangeRequestDto;
 import com.jeonghyeon.authservice.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -65,5 +66,17 @@ public class AccountService {
             return new ResponseEntity(new ResponseDto<>(HttpStatus.OK.value(), accountRole.toString()),HttpStatus.OK);
         else
             throw new IllegalStateException("관리자가 아닙니다.");
+    }
+    @Transactional
+    public ResponseEntity roleChange(RoleChangeRequestDto dto) {
+        String accountId = dto.getAccountId();
+        Optional<Account> opAccount = accountRepository.findByAccountId(accountId);
+        if(opAccount.isEmpty()){
+            return new ResponseEntity(accountId + " 해당 유저는 없습니다.",HttpStatus.BAD_REQUEST);
+        }
+        Account account = opAccount.get();
+        Account updateAccount = account.updateRole(dto.getAccountRole());
+        Account savedAccount = accountRepository.save(updateAccount);
+        return new ResponseEntity(savedAccount.getUuid(),HttpStatus.OK);
     }
 }

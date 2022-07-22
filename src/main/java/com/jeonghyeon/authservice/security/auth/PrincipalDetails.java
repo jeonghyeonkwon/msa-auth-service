@@ -28,7 +28,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return account.getAccountRandomId();
+        return account.getUuid();
     }
 
     @Override
